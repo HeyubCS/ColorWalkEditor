@@ -1,0 +1,3 @@
+p1 red bird,touchables.png,Cardinal-bird-call.mp3,481,44,77,61,.30,.25,100,100,0,no
+p1 green helicopter,touchables.png,none,333,42,138,68,.30,.25,10,10,35,no
+p1 letter blocks,touchables.png,none,25,33,154,124,.40,.35,10,10,0,no
