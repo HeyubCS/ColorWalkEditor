@@ -1,16 +1,15 @@
-import javafx.beans.property.SimpleStringProperty;
 
 public class Row {
-	private final SimpleStringProperty name;
-	private final SimpleStringProperty value;
+	private final String name;
+	private final String value;
 	Row(String n, String v){
-		this.name = new SimpleStringProperty(n);
-		this.value = new SimpleStringProperty(v);
+		this.name = n;
+		this.value = v;
 	}
 	public String getName() {
-		return name.get();
+		return name;
 	}
 	public String getValue() {
-		return value.get();
+		return value;
 	}
 }
