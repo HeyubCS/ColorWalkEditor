@@ -27,12 +27,9 @@ public class Touchable implements Cloneable, Serializable{
 	 int imageY;
 	 int width;
 	 int height;
-	 float scaleX;
-	 float scaleY;
 	 int screenX;
 	 int screenY;
-	 float rotation;
-	 String isFinal;
+	 String isFinal = "false";
 	private BufferedImage image;
 	private float softScale = 1; // This scale is used only by the editor.	
 	private int frameCount;
@@ -58,12 +55,7 @@ public class Touchable implements Cloneable, Serializable{
 		imageY = idleFrame.y = Integer.parseInt(dataList[4]);
 		width = idleFrame.width = Integer.parseInt(dataList[5]);
 		height = idleFrame.height = Integer.parseInt(dataList[6]);
-		setScaleX(Float.parseFloat(dataList[7]));
-		setScaleY(Float.parseFloat(dataList[8]));
-		setScreenX(Integer.parseInt(dataList[9]));
-		setScreenY(Integer.parseInt(dataList[10]));
-		setRotation(Float.parseFloat(dataList[11]));
-		setIsFinal(dataList[12]);
+		
 		//loadImage();
 	}
 	
@@ -127,7 +119,7 @@ public class Touchable implements Cloneable, Serializable{
 			fullImage = fullImage.getSubimage(imageX, imageY, width, height);
 			BufferedImage scaled = new BufferedImage( width, height, BufferedImage.TYPE_INT_ARGB);
 			AffineTransform at = new AffineTransform();
-			at.scale(scaleX * softScale, scaleY * softScale);
+			at.scale(softScale, softScale);
 			AffineTransformOp scaleOp = 
 			   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			scaled = scaleOp.filter(fullImage, scaled);
@@ -146,7 +138,7 @@ public class Touchable implements Cloneable, Serializable{
 			fullImage = fullImage.getSubimage(imageX, imageY, width, height);
 			BufferedImage scaled = new BufferedImage( width, height, BufferedImage.TYPE_INT_ARGB);
 			AffineTransform at = new AffineTransform();
-			at.scale(scaleX * softScale, scaleY * softScale);
+			at.scale(softScale, softScale);
 			AffineTransformOp scaleOp = 
 			   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			scaled = scaleOp.filter(fullImage, scaled);
@@ -189,22 +181,6 @@ public class Touchable implements Cloneable, Serializable{
 		this.height = height;
 	}
 
-	public float getScaleX() {
-		return scaleX;
-	}
-
-	public void setScaleX(float newScaleX) {
-		this.scaleX = newScaleX;
-	}
-
-	public float getScaleY() {
-		return scaleY;
-	}
-
-	public void setScaleY(float newScaleY) {
-		this.scaleY = newScaleY;
-	}
-
 	public int getScreenX() {
 		return screenX;
 	}
@@ -221,21 +197,6 @@ public class Touchable implements Cloneable, Serializable{
 		this.screenY = screenY;
 	}
 
-	public float getRotation() {
-		return rotation;
-	}
-
-	public void setRotation(float rotation) {
-		this.rotation = rotation;
-	}
-
-	public String getIsFinal() {
-		return isFinal;
-	}
-
-	public void setIsFinal(String isFinal) {
-		this.isFinal = isFinal;
-	}
 	
 	public Touchable getClone(int id){
 		Touchable thisClone = null;
@@ -269,11 +230,9 @@ public class Touchable implements Cloneable, Serializable{
 		        imageY      = (int)    aInputStream.readObject();
 		        width       = (int)    aInputStream.readObject();
 		        height      = (int)    aInputStream.readObject();
-		        scaleX      = (float)  aInputStream.readObject();
-		        scaleY      = (float)  aInputStream.readObject();
+
 		        screenY     = (int)    aInputStream.readObject();
 		        screenX     = (int)    aInputStream.readObject();
-		        rotation    = (float)  aInputStream.readObject();
 		        isFinal     = (String) aInputStream.readObject();
 		        softScale   = (float)  aInputStream.readObject();
 	    	}
@@ -298,12 +257,10 @@ public class Touchable implements Cloneable, Serializable{
         aOutputStream.writeObject(imageY);
         aOutputStream.writeObject(width);
         aOutputStream.writeObject(height);
-        aOutputStream.writeObject(scaleX);
-        aOutputStream.writeObject(scaleY);
+        aOutputStream.writeObject(isFinal);
         aOutputStream.writeObject(screenY);
         aOutputStream.writeObject(screenX);
-        aOutputStream.writeObject(rotation);
-        aOutputStream.writeObject(isFinal);
+
         aOutputStream.writeObject(softScale);
     }
 	//Begin sprite data code...	
@@ -315,6 +272,8 @@ public class Touchable implements Cloneable, Serializable{
 		r = new Row("sound", this.getSound());
 		rowList.add(r);
 		r = new Row("image", this.getImageName());
+		rowList.add(r);
+		r = new Row("isFinal", this.getFinal());
 		rowList.add(r);
 		r = new Row("x", Integer.toString(frameData.x));
 		rowList.add(r);
@@ -337,6 +296,14 @@ public class Touchable implements Cloneable, Serializable{
 
 	public String getId() {
 		return id;
+	}
+	
+	public void setFinal(String value){
+		isFinal = value;
+	}
+	
+	public String getFinal(){
+		return isFinal;
 	}
 
 	public void setId(String id) {

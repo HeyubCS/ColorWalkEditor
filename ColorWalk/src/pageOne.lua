@@ -8,13 +8,30 @@ local scene = composer.newScene()
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
 -- -----------------------------------------------------------------------------------
  
- 
- 
+local nextLevelName = "mainMenu"
+
+ local function nextLevel(event)
+    if(event.phase == "ended") then 
+        local options = {
+                            effect = "slideLeft",
+                            time = 800,
+                            params = {levelName = nextLevelName}
+                        }
+        print(nextLevelName)
+        if(nextLevelName ~= "mainMenu") then
+            composer.gotoScene("src.pageOne", options)
+        else
+            print("Here")
+            composer.gotoScene("mainMenu", options)
+        end
+    end
+ end
  
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
- 
+
+
 -- create()
 function scene:create( event )
  
@@ -34,20 +51,27 @@ function scene:show( event )
     local foregroundImage;
     local objects  = {};
     local level = "pages." .. event.params.levelName;
-    print(level) 
+
     if ( phase == "will" ) then
         -- Code here runs when the scene is still off screen (but is about to come on screen)
     local page = require(level);
+    if(page.nextLevel ~= "" and page.nextLevel ~= "mainMenu") then
+        nextLevelName = page.nextLevel;
+    else
+        nextLevelName = "mainMenu"
+    end
     print(page.background)
     if page.background ~= "none" and page.background ~= "null" then
         backgroundImage = display.newImageRect(page.background, display.actualContentWidth, display.actualContentHeight);
-        backgroundImage.x = display.contentCenterX;
-        backgroundImage.y = display.contentCenterY;
+        backgroundImage.x = display.contentCenterX
+        backgroundImage.y = display.contentCenterY
+        sceneGroup:insert(backgroundImage)
     end
     if(page.foreground ~= "none" and page.foreground ~= "null") then
         foregroundImage = display.newImageRect(page.foreground, display.actualContentwidth, display.actualContentHeight);
-        foregroundImage.x = display.contentCenterX;
-        foregroundImage.y = display.contentCenterY;
+        foregroundImage.x = display.contentCenterX
+        foregroundImage.y = display.contentCenterY
+        sceneGroup:insert(foregroundImage)
     end
     local temp = page.objects[1];
     print(temp.ID);
@@ -58,6 +82,11 @@ function scene:show( event )
     local temp = {};
     for i = 1, page.objectCount do --pseudocode
         objects[i] = touchable:createTouchable(page.objects[i]);
+
+        if page.objects[i].isFinal == true then
+            objects[i]:addEventListener("touch", nextLevel)
+        end
+        sceneGroup:insert(objects[i])
     end
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen

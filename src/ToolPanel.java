@@ -181,10 +181,7 @@ public class ToolPanel extends JPanel{
 									currentTouchable.getImagePath(),//{"image",""}, //private String imageName; //private String imagePath;
 									currentTouchable.getScreenX(),//{"X",""}, //private int screenX;
 									currentTouchable.getScreenY(),//{"Y",""}, //private int screenY;
-									currentTouchable.getScaleX(),//{"Scale X",""}, //private float scaleX;
-									currentTouchable.getScaleY(),//{"Scale Y",""}, //private float scaleY;
-									currentTouchable.getRotation(),//{"Rotation",""}, //private float rotation;
-									currentTouchable.getIsFinal()//{"isFinal",""} //private String isFinal;
+									currentTouchable.getFinal()
 								);
 	}
 	

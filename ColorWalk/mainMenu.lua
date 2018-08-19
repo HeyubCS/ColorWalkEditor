@@ -33,7 +33,7 @@ local function startGame(event)
         local options = {
                             effect = "slideLeft",
                             time = 800,
-                            params = {levelName = "first"}
+                            params = {levelName = "ColorWalkP1"}
                         }
         composer.gotoScene("src.pageOne", options);
 	end

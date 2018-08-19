@@ -1,0 +1,1 @@
+This is a demo of the Color Walk game. It is the shell of the game. Its purpose is to help in the development of the level editor.

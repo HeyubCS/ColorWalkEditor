@@ -5,12 +5,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StreamCorruptedException;
-import java.util.ArrayList;
+
 
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
 
 public class MainFrame extends JFrame implements ActionListener, ListSelectionListener, MouseListener, TableModelListener {
@@ -247,7 +245,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 		int row = e.getFirstRow();
 		String property = (String) tm.getValueAt(row, 0);
 		Object value = tm.getValueAt(row, 1);
-		//System.out.println(value);
+		System.out.println(value);
 		apane.updateSprite(property, value);
 		this.repaint();		
 	}

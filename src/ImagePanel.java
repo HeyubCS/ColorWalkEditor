@@ -20,7 +20,7 @@ public class ImagePanel extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Dimension size = new Dimension(1920,1280);
+	private Dimension size = new Dimension(1920,1080);
 	private BufferedImage background;
 	private BufferedImage foreground;
 	private String backgroundFilePath;
@@ -215,7 +215,6 @@ public class ImagePanel extends JPanel{
 			else{
 				newScaleX = (float) value;
 			}
-			sprites.get(selectedObject).setScaleX(newScaleX);
 			//Refresh the image drawing
 			sprites.get(selectedObject).loadImage();
 			break;
@@ -227,7 +226,6 @@ public class ImagePanel extends JPanel{
 			else{
 				newScaleY = (float) value;
 			}
-			sprites.get(selectedObject).setScaleY(newScaleY);
 			//Refresh the image drawing
 			sprites.get(selectedObject).loadImage();
 			break;
@@ -239,12 +237,11 @@ public class ImagePanel extends JPanel{
 			else{
 				newRotation = (float) value;
 			}
-			sprites.get(selectedObject).setRotation(newRotation);
 			//Refresh the image drawing
 			sprites.get(selectedObject).loadImage();
 			break;
 		case "isFinal": //{"isFinal",""} //private String isFinal;
-			sprites.get(selectedObject).setIsFinal((String) value);
+			sprites.get(selectedObject).isFinal = (String) value;
 			break;
 		default: //unknown value
 				break;
@@ -262,17 +259,11 @@ public class ImagePanel extends JPanel{
 
 	        if(sprites != null){
 	    		sprites.forEach((temp) -> {
-	    			if(temp.getRotation() > 0 ){
-	    		        Graphics2D g2d;
-	    		        g2d = (Graphics2D)g.create();
-	    				g2d.rotate(Math.toRadians(temp.getRotation()), (temp.getScreenX() + ((temp.getWidth()/2) * temp.getScaleX()) ), (temp.getScreenY() + ((temp.getHeight()/2) * temp.getScaleY()) ));
-		    		    g2d.drawImage(temp.getImage(), temp.getScreenX(), temp.getScreenY(), this);
-	    			}
-	    			else{
+
 	    		        Graphics2D g2d;
 	    		        g2d = (Graphics2D)g.create();
 		    		    g2d.drawImage(temp.getImage(), temp.getScreenX(), temp.getScreenY(), this);
-	    			}
+
 
 	    		});
 	        }

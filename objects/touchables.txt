@@ -1,3 +1,12 @@
-p1 red bird,touchables.png,Cardinal-bird-call.mp3,481,44,77,61,.30,.25,100,100,0,no
-p1 green helicopter,touchables.png,none,333,42,138,68,.30,.25,10,10,35,no
-p1 letter blocks,touchables.png,none,25,33,154,124,.40,.35,10,10,0,no
+whiteDoughnut,ColorWalkSprite.png,,12,193,247,104
+pinkDoughnut,ColorWalkSprite.png,,14,305,247,104
+blueDoughnut,ColorWalkSprite.png,,14,413,247,104
+yellowFlower,ColorWalkSprite.png,,311,387,50,80
+redFlower,ColorWalkSprite.png,,385,385,50,80
+blueFlower,ColorWalkSprite.png,,459,387,50,80
+whiteFlower,ColorWalkSprite.png,,529,387,50,80
+pinkFlower,ColorWalkSprite.png,,603,387,50,80
+blackFlower,ColorWalkSprite.png,,667,389,50,80
+redBird,ColorWalkSprite.png,,10,10,57,37
+redCar,ColorWalkSprite.png,,83,11,74,38
+brownDog,ColorWalkSprite.png,,16,666,157,179

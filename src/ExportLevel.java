@@ -13,7 +13,7 @@ public class ExportLevel {
 			writer.println(level.getName() + ".background = \"" + level.backgroundImagePath + "\";");
 			writer.println(level.getName() + ".foreground = \"" + level.foregroundImagePath + "\";");
 			writer.println(level.getName() + ".objectCount = " + level.objectCount + ";");
-			writer.println(level.getName() + ".nextLevel = " + level.nextLevel + ";");
+			writer.println(level.getName() + ".nextLevel = \"" + level.nextLevel + "\";");
 			ArrayList<Touchable> objects = level.getSprites();
 			int i = 1;
 			for(Touchable obj : objects){
@@ -31,12 +31,9 @@ public class ExportLevel {
 				writer.println(level.getName() + ".objects[" + i + "].imageY      = "+ obj.imageY     + ";");
 				writer.println(level.getName() + ".objects[" + i + "].width       = "+ obj.width      + ";");
 				writer.println(level.getName() + ".objects[" + i + "].height      = "+ obj.height     + ";");
-				writer.println(level.getName() + ".objects[" + i + "].scaleX      = "+ obj.scaleX     + ";");
-				writer.println(level.getName() + ".objects[" + i + "].scaleY      = "+ obj.scaleY     + ";");
 				writer.println(level.getName() + ".objects[" + i + "].screenY     = "+ obj.screenY    + ";");
 				writer.println(level.getName() + ".objects[" + i + "].screenX     = "+ obj.screenX    + ";");
-				writer.println(level.getName() + ".objects[" + i + "].rotation    = "+ obj.rotation   + ";");
-				writer.println(level.getName() + ".objects[" + i + "].isFinal     = \""+ obj.isFinal    + "\";");
+				writer.println(level.getName() + ".objects[" + i + "].isFinal     = "+ obj.isFinal    + ";");
 				writer.println("--------------------------------------------------------");
 				writer.println("--------------------------------------------------------");
 				writer.println("--------------------------------------------------------");
