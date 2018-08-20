@@ -220,21 +220,20 @@ public class Touchable implements Cloneable, Serializable{
     {
     	try{
 	    	try{
-		    	ID          = (int)    aInputStream.readObject();
-		        imagePath   = (String) aInputStream.readObject();
-		        soundPath   = (String) aInputStream.readObject();
-		        touchableId = (String) aInputStream.readObject();
-		        imageName   = (String) aInputStream.readObject();
-		        soundName   = (String) aInputStream.readObject();
-		        imageX      = (int)    aInputStream.readObject();
-		        imageY      = (int)    aInputStream.readObject();
-		        width       = (int)    aInputStream.readObject();
-		        height      = (int)    aInputStream.readObject();
-
-		        screenY     = (int)    aInputStream.readObject();
-		        screenX     = (int)    aInputStream.readObject();
-		        isFinal     = (String) aInputStream.readObject();
-		        softScale   = (float)  aInputStream.readObject();
+		    	ID          = (int)    aInputStream.readObject();//
+		        imagePath   = (String) aInputStream.readObject();//
+		        soundPath   = (String) aInputStream.readObject();//
+		        touchableId = (String) aInputStream.readObject();//
+		        imageName   = (String) aInputStream.readObject();//
+		        soundName   = (String) aInputStream.readObject();//
+		        imageX      = (int)    aInputStream.readObject();//
+		        imageY      = (int)    aInputStream.readObject();//
+		        width       = (int)    aInputStream.readObject();//
+		        height      = (int)    aInputStream.readObject();//
+		        isFinal     = (String) aInputStream.readObject();//
+		        screenY     = (int)    aInputStream.readObject();//
+		        screenX     = (int)    aInputStream.readObject();//
+		        softScale   = (float)  aInputStream.readObject();//
 	    	}
 	    	catch(ClassNotFoundException cnfe){
 	    		cnfe.printStackTrace();
@@ -260,7 +259,6 @@ public class Touchable implements Cloneable, Serializable{
         aOutputStream.writeObject(isFinal);
         aOutputStream.writeObject(screenY);
         aOutputStream.writeObject(screenX);
-
         aOutputStream.writeObject(softScale);
     }
 	//Begin sprite data code...	

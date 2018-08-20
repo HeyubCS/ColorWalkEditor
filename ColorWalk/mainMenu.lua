@@ -35,19 +35,10 @@ local function startGame(event)
                             time = 800,
                             params = {levelName = "ColorWalkP1"}
                         }
-        composer.gotoScene("src.pageOne", options);
+        composer.gotoScene("pages.ColorWalkP1", options);
 	end
 end
 
-local function levelEditor(event)
-    if(event.phase == "ended") then
-        local options = {
-                            effect = "slideLeft",
-                            time = 800,
-                        }
-        composer.gotoScene("src.levelEditor", options);
-    end
-end
 
 -- create()
 function scene:create( event )
@@ -83,27 +74,10 @@ function scene:show( event )
     		}
 		)
 
-        local buttonlevelEditor = widget.newButton(
-            {
-                left = display.contentCenterX - 100,
-                top = 50,
-                id = "buttonStart",
-                label = "Level Editor",
-                shape = "roundedRect",
-                width = 200,
-                height = 40,
-                cornerRadius = 2,
-                fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
-                strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
-                strokeWidth = 4,
-                onEvent = levelEditor
-            }
-        )
-
 		local buttonQuit = widget.newButton(
     		{
         		left = display.contentCenterX - 100 ,
-        		top = 100,
+        		top = 50,
         		id = "buttonQuit",
        			label = "Quit",
        			shape = "roundedRect",
@@ -118,7 +92,6 @@ function scene:show( event )
 		)
 
 		sceneGroup:insert(buttonStart);
-        sceneGroup:insert(buttonlevelEditor);
 		sceneGroup:insert(buttonQuit);
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen

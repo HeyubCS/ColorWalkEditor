@@ -1,7 +1,10 @@
 TODO list
 Color Walk Editor (not the game)
-1. Fix saving levels within the editor.
-	* I broke this when I removed rotation and scale from the editor.
+1. Save next level variable with level data.
+	* Currently the nextLevel is not saved and must be changed every time a level is loaded into the editor.
+1.1. Research exporting and scaling images in Java.
+1.2. Export images at various lower resolutions.
+	* Currently the scaling ratio is very high, causing odd visual effects.
 2. Allow for creating new level projects.
 	* Currently I have to relaunch the application to create a clean editor space.
 3. Check file names for invalid characters.
@@ -11,8 +14,9 @@ Color Walk Editor (not the game)
 7. Extend Touchable.java to allow for animations.
 
 Color Walk
-1. Create a scene object for pages.
-	*Currently one scene is behaving as all scenes.
-2. Extend Touchable.lua to allow for animations
-3. Removed "Level Editor" scene and button.
-	* It was too hard to create a level editor within Corona SDK
+1. Extend Touchable.lua to allow for animations
+1.1. Add support for varying resolutions.
+2. Change Touchable to not include a listener.
+	* This should be the responsibility of the scene.
+3. Investigate creating a "page" object.
+	* Currently the editor creates a scene for each page. Seems redundant but maybe best solution.

@@ -1,5 +1,0 @@
-roomOne.png,.30,.25
-none,none,none
-p1 red bird,touchables.png,Cardinal-bird-call.mp3,.30,.25,10,10,none,no
-p1 green helicopter,touchables.png,none,.30,.25,10,10,35,no
-p1 letter blocks,touchables.png,none,.40,.35,10,10,none,no
