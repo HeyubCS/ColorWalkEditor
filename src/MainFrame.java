@@ -145,6 +145,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 				fis = new FileInputStream(filePath);
 				ois = new ObjectInputStream(fis);
 				Level loaded = (Level) ois.readObject();
+				System.out.println(loaded.nextLevel);
 				tools.loadLevel(loaded.objectList, loaded.backgroundImagePath, loaded.foregroundImagePath, loaded.nextLevel);
 				apane.loadLevel(loaded.sprites, loaded.backgroundImagePath, loaded.foregroundImagePath, loaded.nextLevel);
 				fis.close();
@@ -184,6 +185,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 			Level newLevel = new Level(apane.getObjectList(), apane.getBackgroundFilePath(),
 						apane.getForegroundFilePath(), tools.getObjectList(), apane.getObjectCount(), tools.getNextLevel());
 			newLevel.levelName = fileName;
+			apane.exportImages(); //Scale images.
 			new ExportLevel(filePath, newLevel);
 		}
 

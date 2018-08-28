@@ -19,8 +19,8 @@ ColorWalkP1.objects[1].imageX      = 83;
 ColorWalkP1.objects[1].imageY      = 11;
 ColorWalkP1.objects[1].width       = 74;
 ColorWalkP1.objects[1].height      = 38;
-ColorWalkP1.objects[1].screenY     = 943;
-ColorWalkP1.objects[1].screenX     = 922;
+ColorWalkP1.objects[1].screenY     = 921;
+ColorWalkP1.objects[1].screenX     = 968;
 ColorWalkP1.objects[1].isFinal     = true;
 --------------------------------------------------------
 --------------------------------------------------------
@@ -32,7 +32,7 @@ local scene = composer.newScene()
  
 -- ----------------------------------------------------------------------------------- 
 -- Code outside of the scene event functions below will only be executed ONCE unless   
--- the scene is removed entirely (not recycled) via "composer.removeScene()"           
+-- the scene is removed entirely (not recycled) via "composer.removeScene()"         
 -- ----------------------------------------------------------------------------------- 
                                                                                        
 local nextLevelName = "mainMenu"                                                     
@@ -40,15 +40,15 @@ local nextLevelName = "mainMenu"
  local function nextLevel(event)                                                       
     if(event.phase == "ended") then                                                  
         local options = {                                                              
-                            effect = "slideLeft",                                     
-                            time = 800,                                                 
-                            params = {levelName = nextLevelName}                        
-                        }                                                               
-        print(nextLevelName)                                                            
-        if(nextLevelName ~= "mainMenu") then                                            
-            composer.gotoScene("pages." .. nextLevelName, options)                                  
+                            effect = "slideLeft",                                    
+                            time = 800,                                                
+                            params = {levelName = nextLevelName}                       
+                        }                                                              
+        print(nextLevelName)                                                           
+        if(nextLevelName ~= "mainMenu") then                                          
+            composer.gotoScene("pages." .. nextLevelName, options)                    
         else                                                                            
-            composer.gotoScene("mainMenu", options)                                     
+            composer.gotoScene("mainMenu", options)                                   
         end                                                                             
     end                                                                                 
  end                                                                                    
@@ -90,29 +90,28 @@ function scene:show( event )
         backgroundImage.y = display.contentCenterY                                                                       
         sceneGroup:insert(backgroundImage)                                                                               
     end                                                                                                                  
-    if(ColorWalkP1.foreground ~= "none" and ColorWalkP1.foreground ~= "null") then                                                     
+    if(ColorWalkP1.foreground ~= "none" and ColorWalkP1.foreground ~= "null") then               
         foregroundImage = display.newImageRect(ColorWalkP1.foreground, display.actualContentwidth, display.actualContentHeight);
         foregroundImage.x = display.contentCenterX                                                                       
         foregroundImage.y = display.contentCenterY                                                                       
         sceneGroup:insert(foregroundImage)                                                                               
     end                                                                                                                  
-    local temp = ColorWalkP1.objects[1];                                                                                        
+    local temp = ColorWalkP1.objects[1];                                                                       
     print(temp.ID);                                                                                                      
     print(temp.soundPath)                                                                                                
     --touchable:createTouchable(temp);                                                                                   
                                                                                                                          
-    --objects[1] = touchable:createTouchable(ColorWalkP1.objects[1]);                                                           
+    --objects[1] = touchable:createTouchable(ColorWalkP1.objects[1]);                                          
     local temp = {};                                                                                                     
-    for i = 1, ColorWalkP1.objectCount do --pseudocode                                                                          
-        objects[i] = touchable:createTouchable(ColorWalkP1.objects[i]);                                                         
+    for i = 1, ColorWalkP1.objectCount do --pseudocode                                                         
+        objects[i] = touchable:createTouchable(ColorWalkP1.objects[i]);                                        
                                                                                                                          
-        if ColorWalkP1.objects[i].isFinal == true then
-            print("add listener")                                                                          
-            objects[i]:addEventListener("touch", nextLevel)                                                              
+        if ColorWalkP1.objects[i].isFinal == true then                                                         
+            objects[i]:addEventListener("touch", nextLevel)                                                            
         end                                                                                                              
         sceneGroup:insert(objects[i])                                                                                    
     end                                                                                                                  
-    elseif ( phase == "did" ) then                                                                                       
+    elseif ( phase == "did" ) then                                                                                     
         -- Code here runs when the scene is entirely on screen                                                           
                                                                                                                          
     end                                                                                                                  
@@ -126,10 +125,10 @@ function scene:hide( event )
     local sceneGroup = self.view                                                                                         
     local phase = event.phase                                                                                            
                                                                                                                          
-    if ( phase == "will" ) then                                                                                          
+    if ( phase == "will" ) then                                                                                        
         -- Code here runs when the scene is on screen (but is about to go off screen)                                    
                                                                                                                          
-    elseif ( phase == "did" ) then                                                                                       
+    elseif ( phase == "did" ) then                                                                                     
         -- Code here runs immediately after the scene goes entirely off screen                                           
                                                                                                                          
     end                                                                                                                  
@@ -148,10 +147,10 @@ end
 -- -----------------------------------------------------------------------------------                                   
 -- Scene event function listeners                                                                                        
 -- -----------------------------------------------------------------------------------                                   
-scene:addEventListener( "create", scene )                                                                                
-scene:addEventListener( "show", scene )                                                                                  
-scene:addEventListener( "hide", scene )                                                                                  
-scene:addEventListener( "destroy", scene )                                                                               
+scene:addEventListener( "create", scene )                                                                              
+scene:addEventListener( "show", scene )                                                                                
+scene:addEventListener( "hide", scene )                                                                                
+scene:addEventListener( "destroy", scene )                                                                             
 -- -----------------------------------------------------------------------------------                                   
                
 return scene   

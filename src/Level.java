@@ -35,6 +35,7 @@ public class Level implements Serializable {
 		        backgroundImagePath   = (String) aInputStream.readObject();
 		        foregroundImagePath   = (String) aInputStream.readObject();
 		        objectList 		      = (String[]) aInputStream.readObject();
+		        nextLevel 			  = (String) aInputStream.readObject();
 	    	}
 	    	catch(ClassNotFoundException cnfe){
 	    		cnfe.printStackTrace();
@@ -53,6 +54,7 @@ public class Level implements Serializable {
         aOutputStream.writeObject(backgroundImagePath);
         aOutputStream.writeObject(foregroundImagePath);
         aOutputStream.writeObject(objectList);
+        aOutputStream.writeObject(nextLevel);
 
     }
 

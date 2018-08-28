@@ -1,10 +1,7 @@
 TODO list
 Color Walk Editor (not the game)
-1. Save next level variable with level data.
-	* Currently the nextLevel is not saved and must be changed every time a level is loaded into the editor.
-1.1. Research exporting and scaling images in Java.
-1.2. Export images at various lower resolutions.
-	* Currently the scaling ratio is very high, causing odd visual effects.
+1.2. Export foreground and sprite sheets at various scales for corona SDK
+	* Also add check to make sure images are not already scaled
 2. Allow for creating new level projects.
 	* Currently I have to relaunch the application to create a clean editor space.
 3. Check file names for invalid characters.

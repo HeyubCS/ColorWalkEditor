@@ -203,11 +203,13 @@ public class ToolPanel extends JPanel{
 		
 		foregroundImage.setText(foreground);
 		backgroundImage.setText(background);
-		nextLevelField.setText(nl);
-		
+		setNextLevel(nl);
 	}
 	
 	public String getNextLevel(){
 		return nextLevelField.getText();
+	}
+	public void setNextLevel(String loaded){
+		nextLevelField.setText(loaded);
 	}
 }
