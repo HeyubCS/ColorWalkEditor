@@ -107,7 +107,9 @@ function scene:show( event )
         objects[i] = touchable:createTouchable(ColorWalkP1.objects[i]);                                        
                                                                                                                          
         if ColorWalkP1.objects[i].isFinal == true then                                                         
-            objects[i]:addEventListener("touch", nextLevel)                                                            
+            objects[i]:addEventListener("touch", nextLevel)
+        else
+            objects[i]:addEventListener("touch", objects[i].onEvent())
         end                                                                                                              
         sceneGroup:insert(objects[i])                                                                                    
     end                                                                                                                  

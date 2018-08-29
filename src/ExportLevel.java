@@ -114,8 +114,8 @@ public class ExportLevel {
 			writer.println("        sceneGroup:insert(foregroundImage)                                                                               ");
 			writer.println("    end                                                                                                                  ");
 			writer.println("    local temp = "+ level.getName() +".objects[1];                                                                       ");
-			writer.println("    print(temp.ID);                                                                                                      ");
-			writer.println("    print(temp.soundPath)                                                                                                ");
+//			writer.println("    print(temp.ID);                                                                                                      ");
+//			writer.println("    print(temp.soundPath)                                                                                                ");
 			writer.println("    --touchable:createTouchable(temp);                                                                                   ");
             writer.println("                                                                                                                         ");
 			writer.println("    --objects[1] = touchable:createTouchable("+ level.getName() +".objects[1]);                                          ");
@@ -125,8 +125,10 @@ public class ExportLevel {
             writer.println("                                                                                                                         ");
 			writer.println("        if "+ level.getName() +".objects[i].isFinal == true then                                                         ");
 			writer.println("            objects[i]:addEventListener(\"touch\", nextLevel)                                                            ");
-			writer.println("        end                                                                                                              ");
-			writer.println("        sceneGroup:insert(objects[i])                                                                                    ");
+			writer.println("        else");
+			writer.println("            objects[i]:addEventListener(\"touch\", objects[i].onEvent())");
+			writer.println("        end                                                            ");                                                  
+			writer.println("        sceneGroup:insert(objects[i])   ");			writer.println("        sceneGroup:insert(objects[i])                                                                                    ");
 			writer.println("    end                                                                                                                  ");
 			writer.println("    elseif ( phase == \"did\" ) then                                                                                     ");
 			writer.println("        -- Code here runs when the scene is entirely on screen                                                           ");

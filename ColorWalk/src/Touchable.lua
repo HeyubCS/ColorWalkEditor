@@ -37,15 +37,20 @@ function Touchable:createTouchable(touchableData)
 	image.x = ((touchableData.screenX + touchableData.width/2) * scaleRatioX ) - xDelta/2;
 	image.y = ((touchableData.screenY + touchableData.height/2) * scaleRatioY ) -yDelta/2;
 
+
+	return image;
+end
+
+--When an action event occurs perform this action.
+function Touchable:onEvent()
 	if(touchableData.soundName ~= "") then
 		local sound = audio.loadSound(touchableData.soundPath);
 		local function playSound(event)
 			audio.setVolume(.1, {channel = 2});
 			audio.play(sound, {channel = 2});
 		end
---		image:addEventListener("tap", playSound, 1);
+		playSound()
 	end
-	return image;
 end
 
 

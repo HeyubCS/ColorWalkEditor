@@ -80,7 +80,12 @@ public class ImagePanel extends JPanel{
 	}
 	
 	public void exportImages(){
-
+		int w;
+		int h;
+		BufferedImage scaled;
+		AffineTransform at;
+		AffineTransformOp scaleOp;
+		//Export background
 		if (background != null) { //Export the background
 			//Export at 100%
 			//Export at full scale - This is necessary to indicate to corona sdk the scale of the image
@@ -96,14 +101,14 @@ public class ImagePanel extends JPanel{
 			}
 			
 			//Export at 67%
-			int w = (int) Math.round((background.getWidth() * 0.67)); // Should be 1920
-			int h = (int) Math.round(background.getHeight() * 0.67);// Should be 1080
+			w = (int) Math.round((background.getWidth() * 0.67)); // Should be 1920
+			h = (int) Math.round(background.getHeight() * 0.67);// Should be 1080
 			
-			BufferedImage scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-			AffineTransform at = new AffineTransform();
+			scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+			at = new AffineTransform();
 
 			at.scale(0.67, 0.67);
-			AffineTransformOp scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+			scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			scaled = scaleOp.filter(background, scaled);
 
 			//Modify name it indicate scale
@@ -141,6 +146,69 @@ public class ImagePanel extends JPanel{
 				System.out.println("error exporting scaled images");
 			}
 		}
+		
+		//export foreground
+		if (foreground != null) { 
+			//Export at 100%
+			//Export at full scale - This is necessary to indicate to corona sdk the scale of the image
+			int endOfString = foregroundFilePath.length();
+			//Add condition if format is .jpeg (since it is 5 char)
+			String scale_100 = foregroundFilePath.substring(0, endOfString - 4) + "@100" + foregroundFilePath.substring(endOfString-4, endOfString);
+			
+			try {
+				File outputFile = new File(scale_100);
+				ImageIO.write(foreground, "png", outputFile);
+			} catch(IOException e) {
+				System.out.println("error exporting scaled images");
+			}
+			
+			//Export at 67%
+			w = (int) Math.round((foreground.getWidth() * 0.67)); // Should be 1920
+			h = (int) Math.round(foreground.getHeight() * 0.67);// Should be 1080
+			
+			scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+			at = new AffineTransform();
+
+			at.scale(0.67, 0.67);
+			scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+			scaled = scaleOp.filter(foreground, scaled);
+
+			//Modify name it indicate scale
+			endOfString = foregroundFilePath.length();
+			//Add condition if format is .jpeg (since it is 5 char)
+			String scale_67 = foregroundFilePath.substring(0, endOfString - 4) + "@67" + foregroundFilePath.substring(endOfString-4, endOfString);
+			
+			try {
+				File outputFile = new File(scale_67);
+				ImageIO.write(scaled, "png", outputFile);
+			} catch(IOException e) {
+				System.out.println("error exporting scaled images");
+			}
+			
+			//Scale to 42% ~800x450
+			w = (int) Math.round((foreground.getWidth() * 0.42)); // Should be 1920
+			h = (int) Math.round(foreground.getHeight() * 0.42);// Should be 1080
+
+			scaled = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+			at = new AffineTransform();
+			//67% which is ~1280 (I think more like 1284 X 680?
+			at.scale(0.42, 0.42);
+			scaleOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+			scaled = scaleOp.filter(foreground, scaled);
+			
+			//Modify name to indicate scale.
+			endOfString = foregroundFilePath.length();
+			//Add condition if format is .jpeg (since it is 5 char)
+			String scale_42 = foregroundFilePath.substring(0, endOfString - 4) + "@42" + backgroundFilePath.substring(endOfString-4, endOfString);
+			
+			try {
+				File outputFile = new File(scale_42);
+				ImageIO.write(scaled, "png", outputFile);
+			} catch(IOException e) {
+				System.out.println("error exporting scaled images");
+			}
+		}
+		
 	}
 	
 	

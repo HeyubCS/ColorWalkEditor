@@ -1,19 +1,17 @@
 TODO list
 Color Walk Editor (not the game)
-1.2. Export foreground and sprite sheets at various scales for corona SDK
+1. Develop a editor for touchable objects.
+1.1. Extend Touchable.java to allow for animations.
+1.2. Export sprite sheets at various scales for corona SDK
 	* Also add check to make sure images are not already scaled
 2. Allow for creating new level projects.
 	* Currently I have to relaunch the application to create a clean editor space.
 3. Check file names for invalid characters.
 4. Show file path where files are saved to and exported.
 5. Show error dialog when images not found.
-6. Add functionality to add to the object list.
-7. Extend Touchable.java to allow for animations.
 
 Color Walk
 1. Extend Touchable.lua to allow for animations
 1.1. Add support for varying resolutions.
-2. Change Touchable to not include a listener.
-	* This should be the responsibility of the scene.
 3. Investigate creating a "page" object.
 	* Currently the editor creates a scene for each page. Seems redundant but maybe best solution.

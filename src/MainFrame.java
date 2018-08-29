@@ -5,11 +5,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.TableModel;
+/**
+ * 
+ *	MainFrame.java
+ *	This class serves as the primary JFrame of the project.
+ *	This class also, generally, listens to events from its JPanels.
+ */
 
 public class MainFrame extends JFrame implements ActionListener, ListSelectionListener, MouseListener, TableModelListener {
     /**
@@ -21,9 +25,14 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     private ToolPanel tools;
     private int objectCount = 0;
     
+	public static void main(String[] args) {
+        new MainFrame().setVisible(true);
+	}
+	
+    //Initialize the primary JFrame as well as set the default close operation.
+	//I do not remember why this is necessary.
     public void initialize() {
         initializeGui();
-        initializeEvents();
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
     
@@ -37,6 +46,9 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         this.setLocation(screenSize.width/2 - windowSize.width/2, screenSize.height/2 - windowSize.height/2);
         //pane.setLayout(new GridBagLayout());
         apane = new ImagePanel(this);
+        
+        //Create the draw pane. This is the pane which holds the graphical elements
+        //of the level.
         JScrollPane drawPane = new JScrollPane(apane);
         drawPane.getVerticalScrollBar().setUnitIncrement(16);
         drawPane.getHorizontalScrollBar().setUnitIncrement(16);
@@ -46,6 +58,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         this.add(drawPane, BorderLayout.WEST);
         tools = new ToolPanel(this);
         this.add(tools, BorderLayout.EAST);
+        
         //Create a menu bar
         JMenuBar jmb = new JMenuBar();
         JMenu lAndS = new JMenu("File");
@@ -61,27 +74,8 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         lAndS.add(exportItem);
         jmb.add(lAndS);
         this.setJMenuBar(jmb);
-        //this.setJMenuBar(jmb);
-        this.repaint();
-    }
-    
-    private void initializeEvents() {
-        // TODO: Add action listeners, etc
-    }
-    
-    public class Actions implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-            String command = e.getActionCommand();
-            command = command == null ? "" : command;
-            // TODO: add if...if else... for action commands
-        
-        }
-    }
 
-    public void dispose() {
-        // TODO: Save settings
-        //super.dispose();
-        System.exit(0);
+        this.repaint(); //Something to do with Swing...
     }
     
     public void setVisible(boolean b) {
@@ -89,27 +83,26 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
         super.setVisible(b);
     }
 
-    
-	public static void main(String[] args) {
-        new MainFrame().setVisible(true);
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+
 		System.out.println(e.getActionCommand());
+		//Load the background from the file path provided.
 		if(e.getActionCommand().equals("Load")){
 			apane.loadBackgroundImage(tools.getFilePath());
 			this.repaint();
 		}
+		//Scale the draw pane. Currently broken.
 		else if(e.getActionCommand().equals("Scale")){
 			apane.setScale(tools.getScale());
 			this.repaint();
 		}
+		//Load the foreground from the file path provided.
 		else if(e.getActionCommand().equals("LoadForeground")){
 			apane.loadForegroundImage(tools.getForegroundFilePath());
 			this.repaint();
 		}
+		//Add a touchable to the level.
 		else if(e.getActionCommand().equals("AddTouchable")){
 			if(tools.getSelectedTouchable(objectCount) != null){
 				apane.addSprite(tools.getSelectedTouchable(objectCount));
@@ -118,12 +111,14 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 				this.repaint();
 			}
 			else{
-				//No selection
+				//No selection, ignore event.
 			}
 		}
+		//Create a new touchable.
 		else if(e.getActionCommand().equals("New")){ //New touchable template
-			//Launch the sprite editor.
+			//Launch the sprite editor?
 		}
+		//Load a saved editor level.
 		else if (e.getActionCommand().equals("LoadSave")) {
 			FileInputStream fis;
 			ObjectInputStream ois;
@@ -250,11 +245,5 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 		System.out.println(value);
 		apane.updateSprite(property, value);
 		this.repaint();		
-	}
-	
-	//Save function
-	public void save(){
-		//Oh boy.
-		
 	}
 }
