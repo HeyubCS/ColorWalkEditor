@@ -117,6 +117,9 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 		//Create a new touchable.
 		else if(e.getActionCommand().equals("New")){ //New touchable template
 			//Launch the sprite editor?
+			System.out.println("Hello?");
+			TouchableCreator tc = new TouchableCreator();
+			tc.TouchableCreator();
 		}
 		//Load a saved editor level.
 		else if (e.getActionCommand().equals("LoadSave")) {
@@ -153,6 +156,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 			
 			this.repaint();
 		}
+		//Save the level as an editor file
 		else if (e.getActionCommand().equals("Save")) {
 			FileOutputStream fout;
 			ObjectOutputStream oos;
@@ -173,6 +177,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 			}
 			
 		}
+		//Export the game to a lua file
 		else if (e.getActionCommand().equals("Export to lua")) {
 			String filePath = "export/";
 			String fileName = JOptionPane.showInputDialog("Enter filename: ");

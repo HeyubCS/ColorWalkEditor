@@ -1,17 +1,25 @@
 TODO list
 Color Walk Editor (not the game)
 1. Develop a editor for touchable objects.
+	* Touchable Creator to do list
+	   1) Fix invalid selections causing index out of bounds (despite null check)
+	   2) Reduce padding of east-panel (touchablePanel) children
+	   3) Make east and west panels scroll panes
+	   4) Add functionality to save created touchables
+	   5) Add functionality to load and edit existing touchables
+	   6) Add pop-up window to choose which atlas to load
 1.1. Extend Touchable.java to allow for animations.
-1.2. Export sprite sheets at various scales for corona SDK
-	* Also add check to make sure images are not already scaled
+1.2. Create an opening sequence
+	* A simple delay with certain events which are triggered before play commences
+1.3. Create a closing sequence
+	* A delay with certain events which are triggered before transitioning to a new page
 2. Allow for creating new level projects.
 	* Currently I have to relaunch the application to create a clean editor space.
 3. Check file names for invalid characters.
 4. Show file path where files are saved to and exported.
 5. Show error dialog when images not found.
+6. Document expected format for the atlas somewhere.
 
 Color Walk
 1. Extend Touchable.lua to allow for animations
 1.1. Add support for varying resolutions.
-3. Investigate creating a "page" object.
-	* Currently the editor creates a scene for each page. Seems redundant but maybe best solution.

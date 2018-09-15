@@ -97,6 +97,7 @@ public class ToolPanel extends JPanel{
 		deleteTouchable.setActionCommand("DeleteTouchable");
 		deleteTouchable.addActionListener(observer);
 		JButton newTouchable = new JButton("New");
+		newTouchable.addActionListener(observer);
 		addAndDeletePanel.add(newTouchable);
 		addAndDeletePanel.add(addTouchable);
 		touchableListPanel.add(addAndDeletePanel);
