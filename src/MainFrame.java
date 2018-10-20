@@ -24,6 +24,7 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
     private ImagePanel apane;
     private ToolPanel tools;
     private int objectCount = 0;
+    private TouchableCreator tc;
     
 	public static void main(String[] args) {
         new MainFrame().setVisible(true);
@@ -117,10 +118,15 @@ public class MainFrame extends JFrame implements ActionListener, ListSelectionLi
 		//Create a new touchable.
 		else if(e.getActionCommand().equals("New")){ //New touchable template
 			//Launch the sprite editor?
-			System.out.println("Hello?");
-			TouchableCreator tc = new TouchableCreator();
-			tc.TouchableCreator();
+			tc = new TouchableCreator();
+			tc.TouchableCreator(this);
 		}
+		//If a touchable has been exported update the touchable list
+		else if(e.getActionCommand().equals("ExportTouchable")){
+			tc.saveObject();
+			tools.loadTouchables();
+			this.revalidate();
+	    }
 		//Load a saved editor level.
 		else if (e.getActionCommand().equals("LoadSave")) {
 			FileInputStream fis;

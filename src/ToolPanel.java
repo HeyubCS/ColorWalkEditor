@@ -26,10 +26,12 @@ public class ToolPanel extends JPanel{
 	private JTextField nextLevelField;
 	private PropertyPanel properties;
 	private LinkedList<Touchable> imageList;
+	private int touchableCount = 0;
 	private JList<Object> touchableList;
 	private JList<String> objectList;
 	private DefaultListModel<String> objectListModel = new DefaultListModel<String>();
 	private int objectCount = 0;
+	
 	ToolPanel(MainFrame observer){
 		imageList = new LinkedList<Touchable>();
 		//Background panel
@@ -68,26 +70,12 @@ public class ToolPanel extends JPanel{
 		scalePanel.add(scaleField);
 		scalePanel.add(scaleButton);
 		this.add(scalePanel);
-		//Load sprites into jlist
-		try {
-			File file = new File("objects/touchables.txt");
-			FileReader fileReader = new FileReader(file);
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			String line;
-			while ((line = bufferedReader.readLine()) != null) {
-				imageList.add(new Touchable(line));
-			}
-			bufferedReader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		//Create a JList of touchable object templates
 		
-		List<String> dataList = new ArrayList<String>();
-		imageList.forEach((temp) -> {
-		    dataList.add(temp.getTouchableId());
-		});
-		touchableList = new JList<Object>(dataList.toArray());
+		//Load touchable data
+		touchableList = new JList<Object>();
+		loadTouchables();
+		//Create a JList of touchable object templates
+	
 		JPanel touchableListPanel = new JPanel();
 		JPanel addAndDeletePanel = new JPanel();
 		JButton addTouchable = new JButton("Add");
@@ -212,5 +200,34 @@ public class ToolPanel extends JPanel{
 	}
 	public void setNextLevel(String loaded){
 		nextLevelField.setText(loaded);
+	}
+	
+	public void loadTouchables(){
+		//Load sprites into jlist
+		try {
+			File file = new File("objects/touchables.txt");
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String line;
+			int i = 0;
+			while ((line = bufferedReader.readLine()) != null) {
+				if(i >= touchableCount) {
+					imageList.add(new Touchable(line));
+					touchableCount++;
+				}
+				i++;
+			}
+			bufferedReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//Create a JList of touchable object templates
+		
+		List<String> dataList = new ArrayList<String>();
+		imageList.forEach((temp) -> {
+			dataList.add(temp.getTouchableId());
+		});
+		touchableList.setListData(dataList.toArray());
 	}
 }

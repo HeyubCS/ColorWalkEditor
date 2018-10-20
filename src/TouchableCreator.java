@@ -3,25 +3,33 @@
  * It will load a json formatted sprite atlas and then allow the user
  * to create touchable objects by selecting frames and animations.
  */
+//TODO
+// 1: Add export functionality
+//		1.1: Export animation data
+// 2: Add cancel/close window functionality
+// 3: Add edit functionality
+// 4: Input validation checking
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -30,11 +38,14 @@ public class TouchableCreator implements ActionListener
 	private ArrayList<SpriteFrame> frameList;
 	private JFrame creatorFrame;
 	private JTextArea frames;
+	private JTextField idleFrameField;
+	private JTextField touchableName;
 	private JPanel touchablePanel;
 	private JList<Object> frameJList;
 	private ArrayList<JPanel> animationPanels;
+	private String spriteSheetPath;
 
-	public void TouchableCreator(){
+	public void TouchableCreator(ActionListener observer){
 		//Instantiate animation panels. This is used for creating new animations.
 		animationPanels = new ArrayList<JPanel>();
 		//Instantiate frameList. This is used to store sprite frames.
@@ -49,7 +60,7 @@ public class TouchableCreator implements ActionListener
         frames = new JTextArea();
         frames.setEditable(false);
         //Load atlas data.
-        parseAtlas("/Users/tristandavis/Documents/testing/ColorWalkEditor/objects/ColorWalkTest.csv");
+        parseAtlas("objects/ColorWalkTest.csv");
 		//Create a JList of frames templates
 		
 		List<String> dataList = new ArrayList<String>();
@@ -61,7 +72,9 @@ public class TouchableCreator implements ActionListener
         
         
         //Create a panel for modifying a touchable.
-        JTextField touchableName = new JTextField(28);
+        touchableName = new JTextField(28);
+        idleFrameField = new JTextField(10);
+        idleFrameField.setText("0");//Default idle frame
         JButton newAnimation = new JButton("New Animation");
         newAnimation.addActionListener(this);
         
@@ -72,6 +85,8 @@ public class TouchableCreator implements ActionListener
         JLabel touchableNameLabel = new JLabel("Touchable Name");
         touchableNamePanel.add(touchableNameLabel);
         touchableNamePanel.add(touchableName);
+        touchableNamePanel.add(new JLabel("idle frame"));
+        touchableNamePanel.add(idleFrameField);
         touchablePanel.add(touchableNamePanel);
         touchablePanel.add(newAnimation);
         //Create a label indicating frames and animation names
@@ -88,18 +103,23 @@ public class TouchableCreator implements ActionListener
         
         
         //create a panel for the frame list
-        JPanel listsPanel = new JPanel();
-        listsPanel.add(frameJList);
+        JScrollPane listScrollPane = new JScrollPane(frameJList);
+        listScrollPane.setPreferredSize(frameJList.getPreferredSize());
+        listScrollPane.revalidate();
         
         //Create a panel for creating the touchable
         JPanel createExitPanel = new JPanel();
         JButton exportButton = new JButton("Export");
+        exportButton.setActionCommand("ExportTouchable");
+        exportButton.addActionListener(this);
+        exportButton.addActionListener(observer);
         JButton cancelButton = new JButton("Cancel");
+        cancelButton.addActionListener(this);
         createExitPanel.add(exportButton);
         createExitPanel.add(cancelButton);
         
         //add components to main frame
-        creatorFrame.add(listsPanel, BorderLayout.WEST);
+        creatorFrame.add(listScrollPane, BorderLayout.WEST);
         creatorFrame.add(touchablePanel, BorderLayout.EAST);
         creatorFrame.add(createExitPanel, BorderLayout.SOUTH);
 
@@ -121,7 +141,7 @@ public class TouchableCreator implements ActionListener
 	            	frame.data[2] = Integer.parseInt(stringArray[3]);
 	            	frame.data[3] = Integer.parseInt(stringArray[4]);
 	            	frames.append(frame.name + "\n");
-	            	frameList.add(frame);                                   
+	            	frameList.add(frame);
 	            }
 	            input.close();
 	        } catch (FileNotFoundException e) {
@@ -129,15 +149,22 @@ public class TouchableCreator implements ActionListener
 	        } catch (IOException e) {
 	            System.err.println("Unable to read the file: " + path);
 	        }
+		 spriteSheetPath = "ColorWalkTest.png";
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		//Check for cancel button
 		if(e.getActionCommand().equals("Cancel")) {
-			//creatorFrame.close();
+			//Exit the frame
+		}
+		System.out.println(e.getActionCommand());
+		//Export touchable object; needs a lot of error checking
+		if(e.getActionCommand().equals("ExportTouchable")){
+		//	saveObject(touchableName.getText());
 		}
 		
+		//Check for new animation button
 		if(e.getActionCommand().equals("New Animation")){
 			//Get selected indexes
 			int[] selectedIndex = null;
@@ -178,9 +205,35 @@ public class TouchableCreator implements ActionListener
 				creatorFrame.revalidate();
 				
 			}
+			
+		}
+	}
+	
 
+	public void saveObject(){
+		String objectName = touchableName.getText();
+		//Write to editor touchable objects
+		try {
+			PrintWriter writer;
+			writer = new PrintWriter(new BufferedWriter(new FileWriter("objects/touchables.txt", true)));
+
+			//If writer successfully created construct the strings.
+			//brownDog,ColorWalkSprite.png,,16,666,157,179
+			int idleFrameNumber = Integer.parseInt(idleFrameField.getText());
+			String idleFrameString = objectName + "," + spriteSheetPath + ",,"
+					+ frameList.get(idleFrameNumber).data[0] + ","
+					+ frameList.get(idleFrameNumber).data[1] + ","
+					+ frameList.get(idleFrameNumber).data[2] + ","
+					+ frameList.get(idleFrameNumber).data[3] ;
+			writer.println(idleFrameString);
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			
-			
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

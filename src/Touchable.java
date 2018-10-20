@@ -29,10 +29,10 @@ public class Touchable implements Cloneable, Serializable{
 	 int height;
 	 int screenX;
 	 int screenY;
+	 int frameCount;
 	 String isFinal = "false";
 	private BufferedImage image;
 	private float softScale = 1; // This scale is used only by the editor.	
-	private int frameCount;
 	private final int idleFrame = 0; //Idle frame is always 0.
 	private String id;
 	private String sound;
@@ -42,9 +42,12 @@ public class Touchable implements Cloneable, Serializable{
 		
 	}
 	
+	//Load a touchable
 	Touchable(String data){
 		frameList = new ArrayList<ImageFrame>();		
 
+		//Parse data
+		//TODO: Specify the csv format
 		dataString = data;
 		String[] dataList = data.split(",");
 		setTouchableId(dataList[0]);
@@ -55,6 +58,9 @@ public class Touchable implements Cloneable, Serializable{
 		imageY = idleFrame.y = Integer.parseInt(dataList[4]);
 		width = idleFrame.width = Integer.parseInt(dataList[5]);
 		height = idleFrame.height = Integer.parseInt(dataList[6]);
+		
+		//int dataIndex = 7; //Used to index various frames.
+		
 		
 		//loadImage();
 	}
